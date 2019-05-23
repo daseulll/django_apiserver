@@ -1,23 +1,14 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import generics
-from rest_framework import mixins
 from .models import Post
 from .serializers import PostSerializer
+# from django.shortcuts import get_object_or_404
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
+# from rest_framework import mixins
 
-class PostListAPIView(mixins.ListModelMixin, mixins.CreateModelMixin, 
-                    generics.GenericAPIView):
-
+class PostListAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-    def get(self, request, *args, **kwargs):
-        # *args, **kwargs는 가변인자로서, 넘어오는 갯수 상관없이 다 받아들이겠다는 뜻
-        return self.list(request)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request)
 
 # class PostListAPIView(APIView):
 #     def get(self, request):
@@ -35,21 +26,9 @@ class PostListAPIView(mixins.ListModelMixin, mixins.CreateModelMixin,
 
 # /post/10/ => GET, PUT, DELETE
 
-class PostDetailAPIView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
-                        mixins.DestroyModelMixin, generics.GenericAPIView):
-
+class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-    
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
 # class PostDetailAPIView(APIView):
 #     def get_object(self, pk):
 #         return get_object_or_404(Post, pk=pk)
