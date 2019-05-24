@@ -21,4 +21,5 @@ urlpatterns = [
     path('sample/', include('sample.urls')),
     path('sample_2/', include('sample_2.urls')),
     path('sample_3/', include('sample_3.urls', namespace='sample_3')),
+    path('sample_4/', include('sample_4.urls', namespace='sample_4')),
 ]
